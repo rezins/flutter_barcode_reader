@@ -20,7 +20,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
         val TOGGLE_FLASH = 200
-
+        val AUTO_FOCUS = 300
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +43,27 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
                     TOGGLE_FLASH, 0, "Flash On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
+        if (scannerView.autoFocus) {
+            val item = menu.add(0,
+                    AUTO_FOCUS, 0, "Auto Focus Off")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else {
+            val item = menu.add(0,
+                    AUTO_FOCUS, 0, "Auto Focus On")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
+        
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == TOGGLE_FLASH) {
             scannerView.flash = !scannerView.flash
+            this.invalidateOptionsMenu()
+            return true
+        }
+        if (item.itemId == AUTO_FOCUS) {
+            scannerView.autoFocus = !scannerView.autoFocus
             this.invalidateOptionsMenu()
             return true
         }
