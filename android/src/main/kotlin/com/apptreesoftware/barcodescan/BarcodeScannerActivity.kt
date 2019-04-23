@@ -16,6 +16,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     lateinit var scannerView: me.dm7.barcodescanner.zxing.ZXingScannerView
+    var autoFocus = false
 
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
@@ -43,7 +44,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
                     TOGGLE_FLASH, 0, "Flash On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
-        if (scannerView.autoFocus) {
+        if (autoFocus) {
             val item = menu.add(0,
                     AUTO_FOCUS, 0, "Auto Focus Off")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
@@ -63,7 +64,8 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
             return true
         }
         if (item.itemId == AUTO_FOCUS) {
-            scannerView.autoFocus = !scannerView.autoFocus
+            autoFocus = !autoFocus
+            scannerView.setAutoFocus(autoFocus)
             this.invalidateOptionsMenu()
             return true
         }
