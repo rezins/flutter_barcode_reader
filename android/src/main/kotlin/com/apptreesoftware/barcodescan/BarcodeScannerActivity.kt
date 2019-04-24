@@ -46,11 +46,11 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         }
         if (autoFocus) {
             val item = menu.add(0,
-                    AUTO_FOCUS, 0, "Auto Focus On")
+                    AUTO_FOCUS, 0, "Auto Focus Off")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         } else {
             val item = menu.add(0,
-                    AUTO_FOCUS, 0, "Auto Focus Off")
+                    AUTO_FOCUS, 0, "Auto Focus On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
         
