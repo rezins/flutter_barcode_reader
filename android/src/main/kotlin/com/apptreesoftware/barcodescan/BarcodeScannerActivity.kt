@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.hardware.Camera
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,11 +32,6 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
         setContentView(scannerView)
-    }
-
-    fun setCameraMaxZoom() {
-        var camera = Camera.open();
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
