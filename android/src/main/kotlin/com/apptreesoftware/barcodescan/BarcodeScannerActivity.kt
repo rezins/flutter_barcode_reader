@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.Camera
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,6 +35,11 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         setContentView(scannerView)
     }
 
+    fun setCameraMaxZoom() {
+        var camera = Camera.open();
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (scannerView.flash) {
             val item = menu.add(0,
@@ -46,11 +52,11 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         }
         if (autoFocus) {
             val item = menu.add(0,
-                    AUTO_FOCUS, 0, "Auto Focus Off")
+                    AUTO_FOCUS, 0, "Auto Focus On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         } else {
             val item = menu.add(0,
-                    AUTO_FOCUS, 0, "Auto Focus On")
+                    AUTO_FOCUS, 0, "Auto Focus Off")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
         
