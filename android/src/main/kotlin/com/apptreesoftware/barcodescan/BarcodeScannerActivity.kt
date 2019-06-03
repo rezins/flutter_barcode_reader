@@ -17,11 +17,17 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     lateinit var scannerView: me.dm7.barcodescanner.zxing.ZXingScannerView
     var autoFocus = true
+    var zoom = ZOOM_1X
 
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
         val TOGGLE_FLASH = 200
         val AUTO_FOCUS = 300
+        val ZOOM = 400
+        val ZOOM_1X = 1.0
+        val ZOOM_2X = 2.0
+        val ZOOM_4X = 4.0
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +37,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         scannerView.setAutoFocus(autoFocus)
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
+        scannerView.zoom = zoom
         setContentView(scannerView)
     }
 
@@ -53,6 +60,19 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
                     AUTO_FOCUS, 0, "Auto Focus On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
+        if (zoom == ZOOM_4X) {
+            val item = menu.add(0,
+                    ZOOM, 0, "4x")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else  if (zoom == ZOOM_2X) {
+            val item = menu.add(0,
+                    ZOOM, 0, "2x")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else {
+            val item = menu.add(0,
+                    ZOOM, 0, "1x")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
         
         return super.onCreateOptionsMenu(menu)
     }
@@ -66,6 +86,12 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         if (item.itemId == AUTO_FOCUS) {
             autoFocus = !autoFocus
             scannerView.setAutoFocus(autoFocus)
+            this.invalidateOptionsMenu()
+            return true
+        }
+        if (item.itemId == ZOOM) {
+            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_4X else ZOOM_1X
+            scannerView.zoom = zoom
             this.invalidateOptionsMenu()
             return true
         }
