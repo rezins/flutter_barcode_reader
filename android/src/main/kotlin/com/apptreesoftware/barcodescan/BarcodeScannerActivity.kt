@@ -38,7 +38,6 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
         setContentView(scannerView)
-        scannerView.zoom = zoom
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,6 +104,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         if (!requestCameraAccessIfNecessary()) {
             scannerView.startCamera()
         }
+        scannerView.zoom = zoom
     }
 
     override fun onPause() {
