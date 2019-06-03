@@ -17,7 +17,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     lateinit var scannerView: me.dm7.barcodescanner.zxing.ZXingScannerView
     var autoFocus = true
-    var zoom = ZOOM_1X
+    var zoom = ZOOM_2X
 
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
