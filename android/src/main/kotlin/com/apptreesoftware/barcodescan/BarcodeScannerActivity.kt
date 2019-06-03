@@ -42,24 +42,6 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (scannerView.flash) {
-            val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash Off")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        } else {
-            val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash On")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        }
-        if (autoFocus) {
-            val item = menu.add(0,
-                    AUTO_FOCUS, 0, "Auto Focus Off")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        } else {
-            val item = menu.add(0,
-                    AUTO_FOCUS, 0, "Auto Focus On")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        }
         if (zoom == ZOOM_4X) {
             val item = menu.add(0,
                     ZOOM, 0, "4x")
@@ -71,6 +53,24 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         } else {
             val item = menu.add(0,
                     ZOOM, 0, "1x")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
+        if (scannerView.flash) {
+            val item = menu.add(0,
+                    TOGGLE_FLASH, 1, "Flash Off")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else {
+            val item = menu.add(0,
+                    TOGGLE_FLASH, 1, "Flash On")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
+        if (autoFocus) {
+            val item = menu.add(0,
+                    AUTO_FOCUS, 2, "Auto Focus Off")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else {
+            val item = menu.add(0,
+                    AUTO_FOCUS, 2, "Auto Focus On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
         
