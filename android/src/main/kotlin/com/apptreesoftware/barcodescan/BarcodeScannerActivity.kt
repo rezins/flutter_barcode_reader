@@ -78,6 +78,12 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == ZOOM) {
+            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_4X else ZOOM_1X
+            scannerView.zoom = zoom
+            this.invalidateOptionsMenu()
+            return true
+        }
         if (item.itemId == TOGGLE_FLASH) {
             scannerView.flash = !scannerView.flash
             this.invalidateOptionsMenu()
@@ -86,12 +92,6 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         if (item.itemId == AUTO_FOCUS) {
             autoFocus = !autoFocus
             scannerView.setAutoFocus(autoFocus)
-            this.invalidateOptionsMenu()
-            return true
-        }
-        if (item.itemId == ZOOM) {
-            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_4X else ZOOM_1X
-            scannerView.zoom = zoom
             this.invalidateOptionsMenu()
             return true
         }
