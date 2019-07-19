@@ -37,7 +37,6 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         scannerView.setAutoFocus(autoFocus)
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
-        scannerView.zoom = zoom
         setContentView(scannerView)
     }
 
@@ -103,6 +102,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         scannerView.setResultHandler(this)
         // start camera immediately if permission is already given
         if (!requestCameraAccessIfNecessary()) {
+            scannerView.zoom = zoom
             scannerView.startCamera()
         }
     }
@@ -142,6 +142,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         when (requestCode) {
             REQUEST_TAKE_PHOTO_CAMERA_PERMISSION -> {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
+                    scannerView.zoom = zoom
                     scannerView.startCamera()
                 } else {
                     finishWithError("PERMISSION_NOT_GRANTED")
