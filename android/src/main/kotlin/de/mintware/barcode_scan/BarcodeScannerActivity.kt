@@ -16,10 +16,17 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     lateinit var scannerView: me.dm7.barcodescanner.zxing.ZXingScannerView
+    var autoFocus = true
+    var zoom = ZOOM_2X
 
     companion object {
         val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
         val TOGGLE_FLASH = 200
+        val AUTO_FOCUS = 300
+        val ZOOM = 400
+        val ZOOM_1X = 1.0
+        val ZOOM_2X = 2.0
+        val ZOOM_4X = 4.0
 
     }
 
@@ -27,28 +34,62 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         super.onCreate(savedInstanceState)
         title = ""
         scannerView = ZXingScannerView(this)
-        scannerView.setAutoFocus(true)
+        scannerView.setAutoFocus(autoFocus)
         // this paramter will make your HUAWEI phone works great!
         scannerView.setAspectTolerance(0.5f)
         setContentView(scannerView)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (scannerView.flash) {
+        if (zoom == ZOOM_4X) {
             val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash Off")
+                    ZOOM, 0, "4x")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else  if (zoom == ZOOM_2X) {
+            val item = menu.add(0,
+                    ZOOM, 0, "2x")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         } else {
             val item = menu.add(0,
-                    TOGGLE_FLASH, 0, "Flash On")
+                    ZOOM, 0, "1x")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
+        if (scannerView.flash) {
+            val item = menu.add(0,
+                    TOGGLE_FLASH, 1, "Flash Off")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else {
+            val item = menu.add(0,
+                    TOGGLE_FLASH, 1, "Flash On")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
+        if (autoFocus) {
+            val item = menu.add(0,
+                    AUTO_FOCUS, 2, "Auto Focus Off")
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        } else {
+            val item = menu.add(0,
+                    AUTO_FOCUS, 2, "Auto Focus On")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == ZOOM) {
+            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_4X else ZOOM_1X
+            scannerView.zoom = zoom
+            this.invalidateOptionsMenu()
+            return true
+        }
         if (item.itemId == TOGGLE_FLASH) {
             scannerView.flash = !scannerView.flash
+            this.invalidateOptionsMenu()
+            return true
+        }
+        if (item.itemId == AUTO_FOCUS) {
+            autoFocus = !autoFocus
+            scannerView.setAutoFocus(autoFocus)
             this.invalidateOptionsMenu()
             return true
         }
@@ -60,6 +101,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         scannerView.setResultHandler(this)
         // start camera immediately if permission is already given
         if (!requestCameraAccessIfNecessary()) {
+            scannerView.zoom = zoom
             scannerView.startCamera()
         }
     }
@@ -99,6 +141,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
         when (requestCode) {
             REQUEST_TAKE_PHOTO_CAMERA_PERMISSION -> {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
+                    scannerView.zoom = zoom
                     scannerView.startCamera()
                 } else {
                     finishWithError("PERMISSION_NOT_GRANTED")
