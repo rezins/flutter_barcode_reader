@@ -41,11 +41,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (zoom == ZOOM_4X) {
-            val item = menu.add(0,
-                    ZOOM, 0, "4x")
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        } else  if (zoom == ZOOM_2X) {
+        if (zoom == ZOOM_2X) {
             val item = menu.add(0,
                     ZOOM, 0, "2x")
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
@@ -77,7 +73,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == ZOOM) {
-            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_1X
+            zoom = if (zoom == ZOOM_1X) ZOOM_2X else ZOOM_1X
             scannerView.zoom = zoom
             this.invalidateOptionsMenu()
             return true
