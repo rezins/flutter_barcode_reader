@@ -77,7 +77,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == ZOOM) {
-            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_4X else ZOOM_1X
+            zoom = if (zoom == ZOOM_1X) ZOOM_2X else if (zoom == ZOOM_2X) ZOOM_1X
             scannerView.zoom = zoom
             this.invalidateOptionsMenu()
             return true
