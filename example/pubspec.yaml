@@ -1,6 +1,9 @@
 name: barcode_scan_example
 description: Demonstrates how to use the barcode_scan plugin.
 
+environment:
+  sdk: ">=2.10.0 <3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
